@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!--可以直接在上面进行运算方法-->
+		<div id="app">
+			
+		<button @click="conter += 1">点击加1</button>
+		
+		<p>{{conter}}</p>
+		
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+			
+			var vm = new Vue({
+				el : "#app",
+				data:{
+					conter:0
+				}
+			})
+			
+		</script>
+</html>

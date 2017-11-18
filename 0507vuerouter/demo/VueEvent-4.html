@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="../js/vue.js"></script>
+	<body>
+		<div id="app">
+		<button @click.once="Once" >{{btn}}</button>
+		{{oh}}
+		</div>
+		
+		<script type="text/javascript">
+			
+			new Vue ({
+				
+				el : "#app",
+				data:{
+					btn:"机会只有一次!",
+					oh : ""
+				},
+				methods:{
+					Once:function(){
+						
+						this.btn = "分手吧";
+						this.oh = "没有机会复合的";
+					}
+				}
+				
+			})
+			
+		</script>
+	</body>
+</html>

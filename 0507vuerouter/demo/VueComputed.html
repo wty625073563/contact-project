@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>计算属性</title>
+		<script src="../js/vue.js" ></script>
+		<style type="text/css">
+			#div1{
+				border: 1px solid darkgray;
+				margin-bottom: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<input type="text" v-model="userStr" />
+			<input type="text" v-model="age" />
+			<p>{{methodsStr()}}</p>
+			<p>{{methodsStr()}}</p>
+			<p>{{methodsStr()}}</p>
+			
+			<p>{{computedStr}}</p>
+			<p>{{computedStr}}</p>
+			<p>{{computedStr}}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vm1 = new Vue({
+			el:"#div1",
+			data:{	
+				userStr:"hello",
+				age:18
+			},
+			methods:{
+				methodsStr:function () {
+					console.log("使用methods被执行的次数")
+					return this.userStr.split("").reverse().join("").toUpperCase();
+				}
+			},
+			computed:{
+				computedStr:function () {
+					console.log("使用computed被执行的次数")
+					return this.userStr.split("").reverse().join("").toUpperCase();
+				}				
+			}
+		})
+		
+		//methods和计算属性
+		//methods可以直接{{}}调用，调用的时候要加()，计算属性不用加()
+		//methods中的方法如果通过{{}}调用，非关联数据的修改也会触发方法的执行，计算属性只会当关联数据修改时，才触发
+		//methods的方法每次都要重新执行，计算属性如果关联数据没修改，可以使用缓存数据
+		
+		
+	</script>
+</html>

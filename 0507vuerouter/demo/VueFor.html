@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>循环条件</title>
+		
+		<script src="../js/vue.js"></script>
+		
+		<style type="text/css">
+			#searchBox{
+				width: 500px;
+				height: 300px;
+				/*text-align: center;*/
+				/*border: 1px solid black;*/
+				/*margin: 0 auto;*/
+				margin-top: 20px;
+			}
+			#searchBox input{
+				margin-top: 20px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="searchBox">
+			<input type="text" v-model="seek" />
+			<hr />
+			<!--v-for可以直接循环有重复值的数组，不需要track by-->
+			<li v-for = "(s,i) in dayuzi">{{s}}</li>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		
+		var pos = new Vue({
+			el : "#searchBox",
+			data:{
+				seek : "",
+				stus:[
+					{name:"鱼子",age:18,phone:18634231232},
+					{name:"大鱼子",age:28,phone:13867867876},
+					{name:"coco",age:38,phone:13898345343},
+					{name:"贡茶",age:21,phone:13854654552},
+					{name:"喜茶",age:34,phone:13812343212},
+					{name:"黄振龙",age:12,phone:18612343534},
+					{name:"皇茶",age:21,phone:13854654552},
+					{name:"小鱼子",age:34,phone:13812343212},
+					{name:"鲨鱼",age:12,phone:18612343534}
+				]
+			},
+			computed:{
+				dayuzi : function(){
+					//新建一个空数组来动态存放搜索到的信息
+					var newArr = [];
+					for(s in this.stus){
+						
+						//循环原有的数组,s取下标
+						//判断seek所匹配的stus里的name
+						//indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+						//大于-1即为等于大于0,所以已经匹配到了,有下标0
+						if(this.stus[s].name.indexOf(this.seek)>-1){
+							
+							newArr.push(this.stus[s]);
+							
+						}
+						
+					}
+					return newArr;
+				}
+			}
+			
+		})
+	</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="../js/vue.js"></script>
+	
+	<body>
+		<!--外部/父级-->
+		<div id="app1">
+			<h3 style="color: red;">Props//通过组件prop实现外部传输数据到内部(爸爸到儿子/props down)</h3>
+			<p>外部的name,通过prop的(自己命名)outName/out-name传输到内部</p>
+			<input type="text" v-model="id.name" />
+			{{id.name}}
+			<br />
+			<!--内部/子级-->
+			<p>内部的name</p>
+			<my-pros :out-name="id"></my-pros>
+		</div>
+		
+		<hr />
+		
+		<!--外部/父级-->
+		<div id="app2">
+		<h3 style="color: red;">events//通过组件prop实现内部传输数据到外部(儿子给爸爸/events up)</h3>
+		<p>通过常规时间click等,利用组件内部的$emit和v-on结合触发内部的方法</p>
+		  <p>{{ total }}</p>
+		  <my-pros2 v-on:event-a="show()"></my-pros2>
+		  <!--
+		  	利用$emit结合v-on触发时间event-a的事件,数据为show()
+		  -->
+		  <!--内部/子级-->
+		  <my-pros2 v-on:event-a="show()"></my-pros2>
+		  
+		</div>
+		
+	</body>
+	
+	<script type="text/x-template" id="my-pros2-template">
+		<!--常规时间click定义-->
+		<button @click="increment()">添加数值:{{counter}}</button>
+	</script>
+	
+	<script type="text/javascript">
+		//内部全局
+		Vue.component("my-pros",{
+			props : ["outName"],
+			template : "<div>"+
+			"<input type='text' v-model='outName.name' />"+
+			"<span>{{outName.name}}</span>"+
+			"</div>",
+			data:function(){
+				return {
+					name:"jiji"
+				}
+			}
+		})
+		
+		Vue.component("my-pros2",{
+			props:[],
+			template:"#my-pros2-template",
+			//初始化data的counter值
+			data:function(){
+				return{
+					counter:0
+				}
+			},
+			methods:{
+				increment:function(){
+					this.counter++;
+					//利用$emit触发时间event-a
+					this.$emit('event-a');		
+				}
+			}
+		})
+		
+		//外部
+		var vm1 = new Vue({
+			el:"#app1",
+			data:{
+				id:{name:"dayuzi"}
+			}
+		})
+		
+		var vm2 = new Vue({
+			el:"#app2",
+			data:{
+				//设置初始值
+				total:10
+			},
+			methods:{
+				show:function () {
+					this.total++;
+				}
+			}
+		})
+	</script>
+</html>

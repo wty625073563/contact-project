@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>样式绑定demo1</title>
+		<script src="../js/vue.js"></script>
+		<style type="text/css">
+			.show{
+				width: 100px;height: 100px;
+				border: 1px solid black;
+				display: inline-block;
+				vertical-align: middle;
+				margin-top: 10px;
+			}
+			.blue{color: blue;}
+			.yellow{color: yellow;}
+			.red{color:red;}
+			
+			.small{font-size: 12px;}
+			.middle{font-size: 24px;}
+			.big{font-size: 36px;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<input type="text" v-model="col" />
+			<input type="text" v-model="size" />
+			<br />
+			<div class="show" :class="col">
+				文字文字111
+			</div>
+			<div class="show" :class="[col,size]">
+				文字文字222
+			</div>
+			
+		</div>
+	</body>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					col:"red",
+					size:"middle",
+				}
+			})
+			
+			//只有通过v-bind指令的属性，才可以使用Vue实例中data的属性上的值
+		</script>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>VUE案例</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+		<script src="js/vue.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<!--<script src="js/bootstrap.min.js"></script>-->
+		<script src="https://cdn.bootcss.com/vue-router/2.5.3/vue-router.js"></script>
+		
+		<style type="text/css">
+			body,html{
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑";
+				min-width: 1200px;
+			}
+			#app{
+				position: relative;
+			}
+			.page-header{
+				padding-left:60px ;
+			}
+			.page-header small{
+				font-size: 14px;
+			}
+			.vue-nav{
+				width: 250px;
+				text-align: center;
+				float: left;
+			}
+			
+			.vue-nav::before,.vue-nav::after{
+				content: "";
+				display: table;
+				overflow:hidden;
+  				visibility: hidden;
+			}
+			.vue-nav::after{
+				clear: both;
+			}
+			.vue-nav li{
+				height: 60px;
+			}
+			.main{
+				margin-left: 270px;
+				padding-right: 80px;
+			}
+			.panel-heading{
+				font-size: 20px;
+				font-weight: 700;
+				color: #761C19 !important;
+			}
+			.main-view{
+				margin-bottom: 100px;
+			}
+			.panel-title{
+				color: white;
+				font-size: 22px;
+			}
+			.span-red{
+				color: darkred;
+				font-size: 12px;
+			}
+			.key-ul li{
+				color: orangered;
+				font-size: 13px;
+				margin-top: 5px;
+			}
+			.footer{
+				width: 100%;
+				height: 100px;
+				background: #CCCCCC;
+				color: white;
+				text-align: center;
+				font-size: 12px;
+				position: absolute;
+				bottom: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="page-header">
+				<h1>VUE案例<small>基于vue-router路由</small></h1>
+			</div>
+			
+			<div class="vue-nav">
+				<ul class="nav nav-pills nav-stacked">
+				  <li><router-link to="/Home"> Home</router-link></li>
+				  <li><router-link to="/vueModule" > Vue 模板语法  </router-link></li>
+				  <li><router-link to="/vueIf" > Vue 条件语句  </router-link></li>
+				  <li><router-link to="/vueFor" > Vue 循环语句  </router-link></li>
+				  <li><router-link to="/vueComputed" > Vue 计算属性  </router-link></li>
+				  <li><router-link to="/vueClass" > Vue 样式绑定  </router-link></li>
+				  <li><router-link to="/vueEvent" > Vue 事件处理器  </router-link></li>
+				  <li><router-link to="/vueCompon" > Vue 组件  </router-link></li>
+				  <li><router-link to="/vueRou" > Vue 路由 </router-link></li>
+				</ul>
+			</div>
+			
+			<section  class="main">
+					<router-view></router-view>
+			</section>
+		
+			
+		</div>
+			<!--<div class="footer">
+				<p>The author:wzq</p>
+				<p>Write the time:2017/05/09</p>
+			</div>-->
+		
+	</body>
+	
+		<!--home-->
+		<script type="text/x-template" id="Home-view">
+			<div>
+				<div class="page-header">
+					<h3>HOME</h3>
+				</div>
+				<p>这是默认首页</p>
+				<blockquote >
+				router-view下只能有一个根目录,<strong style="color: red;">那就是要用一个大的div给包裹全部内容才不会出错</strong>
+				</blockquote>
+			</div>
+		</script> 
+		
+		<!--模块语法-->
+		<script type="text/x-template" id="Module-view">
+				<div>
+				<div class="page-header">
+					<h3>Vue 模板语法</h3>
+				</div>
+				<div class="panel panel-default">
+				  <div class="panel-heading">常用插值</div>
+				  <div class="panel-body">
+				    <h3>html</h3>
+				    	使用v-html指令用于输出html代码,在下方data中定义
+				    	<br />
+				    <h3>属性 bind</h3>
+				    	使用v-bind指令才对vue有效.例如:
+				    	<pre>&lt;div v-bind:id="dynamicId"&gt; &lt;/div &gt;
+				    		通常都可以缩写为&lt;div :id="dynamicId"&gt; &lt;/div &gt;
+				    	<br />当然还可以进行判断<br />具体参考 <a href="https://vuefe.cn/v2/guide/syntax.html#属性">vue.js官方文档</a></pre>
+				    <h3>表达式</h3>
+				    	Vue.js 都提供了完全的 JavaScript 表达式支持。<br />
+				    	简单点来说就是 <strong> 在vue里面运算或者什么什么的表达式都支持. </strong>
+				  </div>
+				  </div> <!--插值-->
+				<div class="panel panel-default">
+				  <div class="panel-heading">指令/参数</div>
+				  <div class="panel-body">
+				  	指令就是v-xxx.例如v-if:,v-bind:等等.<br />
+				  	而参数就是指令冒号后面的内容
+				  </div>
+				</div> <!--指令-->
+				
+				<div class="panel panel-default">
+				  <div class="panel-heading">过滤器</div>
+				  <div class="panel-body">
+				  	<h3>filter</h3>
+				  	在vue.js 2.0之后过滤器都需要自己去自定义
+				  	<blockquote>
+				  		1、允许在"{{}}"里面用"|"定义
+				  		<pre> message | filter  //filter="自定义过滤器的命名"</pre>
+				  		2、在v-bind指令中
+				  		<pre>&lt;div v-bind:id="rawId | filter"&gt; &lt;/div &gt;</pre>
+				  	</blockquote>
+				  	怎么自定义呢.简单啦.在新建的Vue中定义filters方法就行啦.比如:
+				  	<pre>new Vue ({
+	filters:(
+	filter :function(value){
+		"内容"
+	}
+	)
+})
+详细参考官方文档啦:<a href="https://vuefe.cn/v2/guide/syntax.html#过滤器" target="_blank">vue.js过滤器</a>
+				  	</pre>
+				  </div>
+				</div> <!--过滤器-->
+				
+				</div>
+				
+			</script> 
+		
+		<!--条件语句-->
+		<script type="text/x-template" id="If-view">
+			<div>
+				<div class="page-header">
+					<h3>Vue 条件语句</h3>
+				</div>
+				<h4><strong>v-if和v-show会根据指令后面的参数,的布尔值来判断是否执行.</strong></h4>
+				
+				v-if/v-else:
+				<pre>&lt;div v-if="show" &gt;v-if为真，显示我 &lt; /div&gt;<br />&lt;div v-else &gt;v-if为假，显示我  &lt;/div&gt;
+<strong>v-if/v-else之间不能有其他元素</strong>
+				<br />v-show:(上面的结合体)
+&lt;div v-show="show"&gt;v-show，会一直留在DOM中&lt;/div&gt;
+				</pre>
+				
+				<p style="font-size: 18px;"><strong>Demo :</strong></p>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueIf.html" ></iframe>
+				<pre>Demo页面链接: <a href="demo/VueIf.html" target="_blank">Demo1</a></pre>
+				<div style="text-align: center;">
+				<img style="border: 1px solid black;" width="50%" src="img/demo1.gif"/>
+				</div>
+				<blockquote style="margin-bottom: 100px;">图片可以很明显可以看出v-if和v-show的区别.<br />
+				v-if是彻底的删除/添加,而v-show只是样式添加了display:none;<br />
+				利用类比的思想,与其相似的有angular框架的ng-if和ng-show;
+				<br />
+				具体参考官方文档 : <a href="https://vuefe.cn/v2/guide/conditional.html" target="_blank">vue.js 条件渲染</a>
+				</blockquote>
+				
+			</div>
+		</script>
+		
+		<!--循环语句-->
+		<script type="text/x-template" id="For-view">
+			<div class="main-view">
+				<div class="page-header">
+					<h3>Vue 循环语句</h3>
+				</div>
+				
+				<blockquote>
+					老实话,这个官方文档:<a href="https://vuefe.cn/v2/guide/list.html">vue.js循环语句(列表渲染)</a>
+					真的超级详细和简单易懂<br />放上之前做过小demo~:
+				</blockquote>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueFor.html" width="500px" height="300px" scrolling="no"></iframe>
+				<pre>Demo页面链接: <a href="demo/VueFor.html" target="_blank">Demo2</a></pre>
+				<p>详细的内容不细说,看<a href="https://vuefe.cn/v2/guide/list.html" target="_blank">vue.js循环语句(列表渲染)</a>这个吧.<br />
+				需要注意的几点:<br />
+				1.v-for 指令需要以 item in items 形式的特殊语法.需要区别于angular框架的ng-repeat.<br />
+				v-for可以直接循环有重复值的数组，不需要track by(ng-repeat需要);<br />
+				2.item in items 中"in"可以用"of"代替.
+				</p>
+				
+			</div>
+		</script>
+		
+		<!--计算属性-->
+		<script type="text/x-template" id="Computed-view">
+			<div class="main-view">
+				<div class="page-header">
+					<h3>Vue 计算属性</h3>
+				</div>
+				
+				<blockquote>
+					computed(计算属性)和methods(方法)类似.当然只是类似! 区别在于:<br />
+				</blockquote>
+				<h4 >Demo:</h4>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueComputed.html" width="370px" height="300px" scrolling="no"></iframe>
+				<pre style="width: 300px;">Demo页面链接: <a href="demo/VueComputed.html">Demo3</a></pre>
+				
+				<h4>区别1:</h4>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueComputed.html/#div1" width="370px" height="300px" scrolling="no"></iframe>
+				<blockquote>
+					methods可以直接{{}}调用，调用的时候要加()，计算属性不用加()
+				</blockquote>
+				
+				<h4>区别2:</h4>
+				<img style="border: 1px solid black;" width="50%" src="img/demo3-1.gif"/>
+				<blockquote>
+					methods的方法每次都要重新执行!，计算属性如果关联数据没修改，可以使用缓存数据
+				</blockquote>
+				
+				<h4>区别3:</h4>
+				<img style="border: 1px solid black;" width="50%" src="img/demo3-2.gif"/>
+				<blockquote>
+					看清楚!methods即使没关联的数据修改了methods都会执行.所以<br />
+					methods中的方法如果通过{{}}调用，非关联数据的修改也会触发方法的执行，计算属性只会当关联数据修改时，才触发<br />
+					methods是不是很霸道,相反computed很冷漠呀
+				</blockquote>
+				
+				具体参考官方文档 : <a href="https://vuefe.cn/v2/guide/computed.html">vue.js 计算属性</a>
+			</div>
+		</script>
+		
+		<!--样式绑定-->
+		<script type="text/x-template" id="Class-view">
+			<div class="main-view">
+				<div class="page-header">
+					<h3>Vue 样式绑定</h3>
+				</div>
+				
+				<blockquote>
+					class 与 style 是 HTML 元素的属性，用于设置元素的样式，只有通过v-bind指令的属性，才可以使用Vue实例中data的属性上的值.
+				</blockquote>
+				
+				<h4>用法1:</h4>
+				<p>demo:</p>
+				<p>尝试改变输入框中的值(yellow,red,blue);(small,middle,big)</p>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueClass-1.html" width="380px" height="170px" scrolling="no"></iframe>
+				<pre style="width: 300px;">Demo页面链接: <a href="demo/VueClass-1.html" target="_blank">Demo4-1</a></pre>
+				<pre >在输入框用v-model双向绑定class值,来改变class的值,前提是style中有这个class.
+&lt;div class="show" :class="col"&gt;
+文字文字111
+&lt;/div&gt;
+&lt;div class="show" :class="[col,size]"&gt;
+文字文字222
+&lt;/div&gt;</pre>
+				<h4>用法2:</h4>
+				<p>demo:</p>
+				<p>利用:class的参数赋予布尔值,从而动态切换class</p>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueClass-2.html" width="370px" height="230px" scrolling="no"></iframe>
+				<pre style="width: 300px;">Demo页面链接: <a href="demo/VueClass-2.html" target="_blank">Demo4-2</a></pre>
+				<pre>&lt;div class="show" :class="{color:isActive}"&gt;&lt;/div&gt;</pre>
+				
+				<h4>用法3:</h4>
+				<p>demo:</p>
+				<p>参数为data中的一个属性，属性值为对象,对象中属性为类的名字，值为布尔类型</p>
+				<iframe style="border: 1px solid #F2DEDE;" src="demo/VueClass-3.html" width="150px" height="50px" scrolling="no"></iframe>
+				<pre style="width: 300px;">Demo页面链接: <a href="demo/VueClass-3.html" target="_blank">Demo4-3</a></pre>
+				<pre>&lt;div :class="box"&gt;boxbox&lt;/div&gt;</pre>
+				<pre>data:{
+box:{
+	color:true,
+	red:true
+	}
+}</pre>
+				<blockquote>
+					class和style(内联样式)用法类似
+					详细参考官方文档 : <a href="https://vuefe.cn/v2/guide/class-and-style.html" target="_blank">vue.js 样式绑定</a>
+				</blockquote>
+			</div>
+			
+		</script>
+		
+		<!--事件处理器-->
+		<script type="text/x-template" id="Event-view">
+			<div class="main-view">
+				<div class="page-header">
+					<h3>Vue 事件处理器</h3>
+				</div>
+				<blockquote>
+					<strong>v-on:可以缩写为@</strong>
+				</blockquote>
+				
+				<div class="panel panel-primary">
+				    <div class="panel-heading">
+				        <h3 class="panel-title">监听事件</h3>
+				    </div>
+				    <div class="panel-body">
+				        <p>用 v-on 指令监听 DOM 事件来触发一些 JavaScript 代码.</p>
+				        <p>Demo:</p>
+				        <p>可以直接在上面进行运算方法</p>
+				        <iframe style="border: 1px solid #F2DEDE;" src="demo/VueEvent-1.html" width="200px" height="75" scrolling="no"></iframe>
+						<pre style="width: 300px;">@click="conter += 1"<br />
+Demo页面链接: <a href="demo/VueEvent-1.html" target="_blank">Demo5-1</a></pre>
+				    </div>
+				</div>
+				
+				<div class="panel panel-primary">
+				    <div class="panel-heading">
+				        <h3 class="panel-title">方法事件处理器</h3>
+				    </div>
+				    <div class="panel-body">
+				        <p>按照官方文档的说法就是大部分的事件哪有像上面那么简单,所以多数是写在新建的vue的methods里头.</p>
+				        <pre>(复制的)许多事件处理的逻辑都很复杂，所以直接把 JavaScript 代码写在 v-on 指令中是不可行的。
+因此 v-on 可以接收一个定义的方法来调用。</pre>
+				        <h3>Demo:</h3>
+				        <p>其实我这个demo也贼简单~</p>
+				        <iframe style="border: 1px solid #F2DEDE;" src="demo/VueEvent-2.html" width="200px" height="120px" scrolling="no"></iframe>
+						<pre style="width: 300px;">@click="zero"<br />
+methods:{
+	zero:function(){
+		this.conter = 0
+		}
+	}
+Demo页面链接: <a href="demo/VueEvent-2.html" target="_blank">Demo5-2</a></pre>
+				    </div>
+				</div>
+				
+				<div class="panel panel-primary">
+				    <div class="panel-heading">
+				        <h3 class="panel-title">内联的处理器方法(其实就是传参)</h3>
+				    </div>
+				    <div class="panel-body">
+				        <p>除了直接绑定到一个方法，也可以用内联 JavaScript 语句</p>
+				        <h3>Demo:</h3>
+				        <p>内联结合class样式绑定</p>
+				        <iframe style="border: 1px solid #F2DEDE;" src="demo/VueEvent-3.html" width="150px" height="50px" scrolling="no"></iframe>
+						<pre style="width: 300px;">Demo页面链接: <a href="demo/VueEvent-3.html" target="_blank">Demo5-3</a></pre>
+						
+						<p>另外vue.js也提供了访问原生DOM时间的特殊变量 <pre>$event</pre></p>
+						<p>详细可以查看官方文档的案例:<a href="http://cn.vuejs.org/v2/guide/events.html#内联处理器方法" target="_blank">内联处理器方法</a></p>
+				    </div>
+				</div>
+				
+				<div class="panel panel-primary">
+				    <div class="panel-heading">
+				        <h3 class="panel-title">事件修饰符/按键修饰符</h3>
+				    </div>
+				    <div class="panel-body">
+				        <p>事件修饰符其实就是 VUE 将原生的DOM事件缩短成(.XX)</p>
+				        <pre >
+<span class="span-red">&lt;!-- 阻止单击事件冒泡 --&gt;</span>
+&lt;a v-on:click.stop="doThis"&gt;&lt;/a&gt;
+<span class="span-red">&lt;!-- 提交事件不再重载页面 --&gt;</span>
+&lt;form v-on:submit.prevent="onSubmit"&gt;&lt;/form&gt;
+<span class="span-red">&lt;!-- 修饰符可以串联  --&gt;</span>
+&lt;a v-on:click.stop.prevent="doThat"&gt;&lt;/a&gt;
+<span class="span-red">&lt;!-- 只有修饰符 --&gt;</span>
+&lt;form v-on:submit.prevent&gt;&lt;/form&gt;
+<span class="span-red">&lt;!-- 添加事件侦听器时使用事件捕获模式 --&gt;</span>
+&lt;div v-on:click.capture="doThis"&gt;...&lt;/div&gt;
+<span class="span-red">&lt;!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 --&gt;</span>
+&lt;div v-on:click.self="doThat"&gt;...&lt;/div&gt;
+<span class="span-red">&lt;!-- 点击事件将只会触发一次 --&gt;</span>
+&lt;a v-on:click.once="doThis"&gt;&lt;/a&gt;
+				        </pre>
+				        <h3>Demo:(.once)</h3>
+				        
+				        <iframe style="border: 1px solid #F2DEDE;" src="demo/VueEvent-4.html" width="250px" height="55px" scrolling="no"></iframe>
+						<pre style="width: 300px;">@click.once="Once"<br />
+Demo页面链接: <a href="demo/VueEvent-4.html" target="_blank">Demo5-4</a></pre>
+				        
+						<p>详细可以查看官方文档的案例:<a href="http://cn.vuejs.org/v2/guide/events.html#事件修饰符" target="_blank">事件修饰符</a></p>
+						
+						<p>按键修饰符其实一鬼样.(@keyup.xx)</p>
+						<p>全部的按键别名</p>
+						<ul class="key-ul">
+							<li>.enter(按了enter键才触发)</li>
+							<li>.tab(按tab键才~)</li>
+							<li>.delete (捕获 “删除” 和 “退格” 键)</li>
+							<li>.esc</li>
+							<li>.space</li>
+							<li>.up</li>
+							<li>.down</li>
+							<li>.left</li>
+							<li>.right</li>
+							<li>还可以自定义全局的keyCodes(就是自定义你按那个键,然后命名~)<br />
+							例如:Vue.config.keyCodes.XX = 82 //(Vue.config.keyCodes是全局固定式,XX是自己命名.等于号"="对应键值,82=R键,开R啊!)
+							</li>
+							<hr />以下为新增
+							<li>.ctrl</li>
+							<li>.alt</li>
+							<li>.shift</li>
+							<li>.meta(Mac系统对应⌘,window对应菜单键,sun系统对应实心宝石键)</li>
+						</ul>
+				    </div>
+				</div>
+				
+				<pre>官方文档:<a href="https://cn.vuejs.org/v2/guide/events.html" target="_blank">事件处理器</a></pre>
+			</div>
+		</script>
+		
+		<!--component组件-->
+		<script type="text/x-template" id="Compon-view">
+			<div class="main-view">
+				<div class="page-header">
+					<h3>Vue component组件!</h3>
+				</div>
+				
+				<p>说到组件,对比angular框架里面相似的!是哪个?没错!就是angular高级指令.先来温习一下~(偷来的图片略丑,将就下)</p>
+				<img src="img/884327-20160927173645156-1453985094.png"/>
+				<pre>其中注释： &lt;!-- 两边一定要留空格，不然什么都不会发生 --&gt;</pre>
+				<br />
+				<blockquote>
+					到了VUE手上就叫组件component,但是千万不可以混淆两个框架,写出来只是类比记忆!<br />
+					<ul>
+						<li>全局组件</li>
+						<li>局部组件</li>
+					</ul>
+					<small>话说官方文档写得贼清楚详细了,为了文章的完整性,我做一下搬运工<br />
+					不想看就直接点击 <a href="https://cn.vuejs.org/v2/guide/components.html#使用组件" target="_blank">么么哒</a></small>
+				</blockquote>
+				<br />
+				<h4>全局组件--就是所定义的组件,在dom中任何位置都可以使用,当然前提你要创建根实例,不然没法激活</h4>
+				<img src="img/全局组件.jpg"/>
+				<br />
+				<h4>局部组件--就是只能在所定义的el挂载的区域内才能使用,其他位置NO</h4>
+				<img src="img/局部组件.jpg"/>
+				<br />
+				<h5 style="color: red;"><strong>温馨提示:组件命名要注意,很容易出错,最好遵循W3C规则</strong></h5>
+				<h3>Demo:(这是官方的文档的model模态框组件,使用全局组件)</h3>
+				 <iframe style="border: 1px solid #F2DEDE;" src="demo/modal/index.html" width="800px" scrolling="no"></iframe>
+						<pre style="width: 300px;">@click.once="Once"<br />
+Demo页面链接: <a href="demo/VueEvent-4.html" target="_blank">Demo5-4</a></pre>
+				
+				<div class="panel panel-primary">
+				    <div class="panel-heading">
+				        <h3 class="panel-title">Props&ensp;/Events(自定义事件)</h3>
+				    </div>
+				    <div class="panel-body">
+				        <blockquote>
+				        	"构成组件"<small>大自然的搬运工</small>
+				        </blockquote>
+				        <img src="img/构成.jpg"/><br />
+				        <img src="img/构成组件.jpg"/>
+				        <br />
+				        <h3>Demo:</h3>
+				        <p>Props和Events(说明看注释,就不复制粘贴了)</p>
+				        <iframe style="border: 1px solid #F2DEDE;" src="demo/VueProp-Events.html" width="700px" height="400px" scrolling="no"></iframe>
+						<pre style="width: 300px;">Demo页面链接: <a href="demo/VueProp-Events.html" target="_blank">Demo5-5</a></pre>
+						
+						<p>详细可以查看官方文档的案例:<a href="https://cn.vuejs.org/v2/guide/components.html#构成组件" target="_blank">构成组件</a></p>
+				    </div>
+				</div>
+				
+				<h3>还有slot的分发,看一下Demo5-4官方文档的模态框就会了解勒</h3>
+				<pre>附送传送门:<a href="https://cn.vuejs.org/v2/guide/components.html#使用-Slot-分发内容" target="_blank">官方Slot分发</a></pre>
+				
+			</div>
+		</script>
+		
+		
+		<!--路由-->
+		<script type="text/x-template" id="Router-view">
+			<div class="main-view">
+				<div class="page-header">
+					<h3>Vue 路由</h3>
+				</div>
+				<blockquote>
+					案例就在眼前.
+					现在这个页面就是基于vue-router基础所完成.<br />
+					更详细的参考官方文档 : <a href="http://router.vuejs.org/zh-cn/" target="_blank">vue-router </a>
+				</blockquote>
+				
+			</div>
+		</script>
+		
+		<script type="text/javascript">
+			
+//			var Home =  {templateUrl : 'vue-home.html' };
+			var Home = {template:"#Home-view"};
+			var vueModule = {template:"#Module-view"};
+			var vueIf = {template:"#If-view"};
+			var vueFor = {template:"#For-view"};
+			var vueComputed = {template:"#Computed-view"};
+			var vueClass = {template:"#Class-view"};
+			var vueEvent = {template:"#Event-view"};
+			var vueCompon = {template:"#Compon-view"};
+			var vueRou = {template:"#Router-view"};
+			
+			var router = new VueRouter({
+				routes:[
+					{path:"/Home",component:Home},
+					{path:"/vueModule",component:vueModule},
+					{path:"/vueIf",component:vueIf},
+					{path:"/vueFor",component:vueFor},
+					{path:"/vueComputed",component:vueComputed},
+					{path:"/vueClass",component:vueClass},
+					{path:"/vueEvent",component:vueEvent},
+					{path:"/vueCompon",component:vueCompon},
+					{path:"/vueRou",component:vueRou}
+				]
+			})
+			var vm = new Vue({
+				
+				el:"#app",
+				router:router,
+			})
+		</script>
+</html>

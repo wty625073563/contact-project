@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>样式绑定demo2</title>
+		<script src="../js/vue.js" ></script>
+		<style type="text/css">
+			.show{
+				width: 100px;height: 100px;
+				border: 1px solid black;
+				display: inline-block;
+				vertical-align: middle;
+				margin-top: 10px;
+				margin-left: 20px;
+			}
+			.color{
+				background-color: lightblue;
+			}
+			.rotate{
+				transform: rotate(45deg);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<button @click="isActive=!isActive">改变状态</button>
+			<br />
+			<input type="checkbox" v-model="isActive" /><br />
+			{{isActive}}<br />
+			<div class="show" :class="{color:isActive}"></div>
+			<div class="show" :class="{color:isActive,rotate:isRotate}"></div>
+			<!--
+				用法1：:class="{color: isActive}"
+				color是css样式表中的样式
+				isActive是Vue实例中的属性
+			-->
+			
+		</div>
+	</body>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					isActive:1,
+					isRotate:true,
+				}
+			})
+			//只有通过v-bind指令的属性，才可以使用Vue实例中data的属性上的值
+		</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.active{
+				color: white;
+				background: black;
+			}
+			.pink{
+				color: white;
+				background: black;
+			}
+			
+		</style>
+	</head>
+	<script src="../js/vue.js"></script>
+	<body>
+		
+		<div id="app">
+			
+			<button @click=miao(1) :class="{active:isActive}">{{one}}</button>
+			
+			<button @click=miao(2) :class="{pink:isPink}">{{two}}</button>
+		</div>
+		
+		
+		<script type="text/javascript">
+			
+			new Vue({
+				el:"#app",
+				data:{
+					one:"点我!",
+					two:"不要点我!",
+					isActive:true,
+					isPink:false
+				},
+				methods:{
+					miao:function(val){
+						
+						if(val==1){
+							this.isActive = false;
+							this.isPink = true;
+							this.one="不要点我!!";
+							this.two="点我";
+						}else if(val==2){
+							this.isActive=true;
+							this.isPink = false;
+							this.one="点我!";
+							this.two="不要点我!";
+						}
+					}
+				}
+				
+			})
+			
+		</script>
+	</body>
+</html>

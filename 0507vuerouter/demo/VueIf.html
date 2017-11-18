@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/vue.js" ></script>
+		<title>条件语句</title>
+	</head>
+	<body>
+		<div id="box">
+			<input type="checkbox" v-model="show" />点我!
+			<hr />
+			{{show}}
+			<hr />
+			<div v-if="show">v-if为真，显示我</div>
+			<div v-else>v-if为假，显示我</div>
+			<!--v-if和v-else之间不要有其他的标签-->
+
+			
+			<div v-show="show">v-show，会一直留在DOM中</div>
+		</div>
+	</body>
+	
+		<script type="text/javascript">
+
+			var vm = new Vue({
+				el:"#box",
+				data:{
+					show:true
+				}
+			})
+			
+		//非布尔类型的数据被用于判断时，如何转化	
+		//数字类型0代表false，非0都代表真	
+		//空字符串""为false，有长度的字符串都是真，包括单空格字符串" "
+		//null为false
+		//定义一个变量，未赋值前是undefined，也是false
+		//数组和对象不管有没有元素或者属性，都是true
+			var a;
+			console.log(a)
+			if(!a){
+//				alert("难道我也是真，错，你是假的")
+			}
+			
+			if([]){
+//				alert("空数组也是真")
+			}
+			if({}){
+//				alert("空对象也是真")
+			}			
+						
+		</script>
+	
+	
+</html>

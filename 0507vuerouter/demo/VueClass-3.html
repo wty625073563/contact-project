@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/vue.js" ></script>
+		<style type="text/css">
+			.color{
+				display: inline-block;
+				background-color: black;
+			}
+			.red{color:red;}
+			
+			.middle{font-size: 24px;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div :class="box">boxbox</div>
+			<!--
+				用法2：:class="box"，其中box是data中的一个属性，属性值为对象
+				box对象中属性为类的名字，值为布尔类型
+			-->
+		</div>
+	</body>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					box:{
+						color:true,
+						red:true
+					}
+				}
+			})
+		</script>
+</html>
